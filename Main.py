@@ -43,8 +43,4 @@ populate_package_data(list_of_csv)
 
 print(hashmap.map[0])
 
-# remember only two drivers ding dong
-truck_one = Truck(1)
-truck_two = Truck(2)
-truck_three = Truck(3)
-
+print(truck_one)
