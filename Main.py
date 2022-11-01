@@ -16,18 +16,16 @@ from Package import *
 from Truck import *
 import csv
 
-hashmap = HashMap()
-#print(hashmap.map)
-
-hashmap.add(3,33)
-hashmap.add(3,44)
-print(hashmap.map)
-
-
-
 with open('packages.csv', 'r') as read_obj:
     csv_reader = csv.reader(read_obj)
     list_of_csv = list(csv_reader)
+
+hashmap = HashMap(len(list_of_csv))
+#print(hashmap.map)
+
+hashmap.add(7,33)
+hashmap.add(3,44)
+# print(hashmap.map)
 
 def populate_package_data(csv_list):
     # print("in function")
@@ -41,6 +39,12 @@ def populate_package_data(csv_list):
 
 populate_package_data(list_of_csv)
 
-print(hashmap.map[0])
+print(hashmap.get_value_by_id(20))
 
-print(truck_one)
+def get_hash_list(key_id):
+    print(key_id)
+
+# print(truck_one)
+# print(truck_two)
+# print(truck_three)
+
