@@ -22,7 +22,7 @@ class Package:
         self.zip = zip
 
     def print_all_values(self):
-        print(self.id, self.address, self.city, self.state, self.zip_code, self.deadline, self.kilograms, self.notes)
+        return self.id, self.address, self.city, self.state, self.zip_code, self.deadline, self.kilograms, self.notes
 
     def get_id(self):
         return self.id
@@ -48,5 +48,5 @@ class Package:
     def get_notes(self):
         return self.notes
     
-    def __str__(self):
-        return f"Key:{self.id}, Address:{self.address}, City:{self.city}, State:{self.state}, Zip:{self.zip_code}, Deadline:{self.deadline}, Weight:{self.kilograms}, Notes:{self.notes}"
+    # def __str__(self):
+    #     return f"Key:{self.id}, Address:{self.address}, City:{self.city}, State:{self.state}, Zip:{self.zip_code}, Deadline:{self.deadline}, Weight:{self.kilograms}, Notes:{self.notes}"

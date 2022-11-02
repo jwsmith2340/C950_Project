@@ -11,6 +11,7 @@
 # Drivers leave the hub at 8am or later
 # Distances in the distance table are equal regardless of distance traveled(?)
 # The day ends when all the packages are delivered
+from json.encoder import INFINITY
 from HashMap import *
 from Package import *
 from Truck import *
@@ -37,36 +38,31 @@ with open('distances.csv', 'r') as read_obj:
 
 adjacency_graph = Graph()
 
-
 for idx, address in enumerate(addresses_csv):
     for index, matched_address in enumerate(addresses_csv):
         if idx != index:
             if distances_csv[idx][index]: 
-                x_vertex = Vertex(address[1])
-                y_vertex = Vertex(matched_address[1])
-                print(x_vertex.__str__())
-                print(y_vertex.__str__())
-                print("***")
+                x_vertex = Vertex(address[2])
+                y_vertex = Vertex(matched_address[2])
+                # print(x_vertex.__str__())
+                # print(y_vertex.__str__())
+                # print("***")
                 adjacency_graph.add_vertex(x_vertex)
                 adjacency_graph.add_vertex(y_vertex)
-                adjacency_graph.add_directed_edge(x_vertex, y_vertex, distances_csv[idx][index])
+                adjacency_graph.add_undirected_edge(x_vertex, y_vertex, distances_csv[idx][index])
                 # print(adjacency_graph.edge_weights.__str__())
-                
                 # print(matched_address)
                 # print(distances_csv[idx][index])
             # print(idx,index)
             # print(address)
             # print(matched_address)
             # print("*****")
-
-print(adjacency_graph.edge_weights[("Wheeler Historic Farm", "City Center of Rock Springs")])
+# print(adjacency_graph.edge_weights)
+# This is how I'm going to access my weight values between places
+# print(adjacency_graph.edge_weights[("Wheeler Historic Farm", "City Center of Rock Springs")])
 
 hashmap = HashMap(len(packages_csv))
 #print(hashmap.map)
-
-hashmap.add(7,33)
-hashmap.add(3,44)
-# print(hashmap.map)
 
 def populate_package_data(csv_list):
     # print("in function")
@@ -80,7 +76,18 @@ def populate_package_data(csv_list):
 
 populate_package_data(packages_csv)
 
-# print(hashmap.get_value_by_id(20))
+# These are all of the available hashmap methods that call the package methods to display values
+# Get all values in a formatted string
+print(hashmap.get_all_values_by_id(20))
+# Get the address value for a package, this is what will be used in the tuples for the edge weights
+print(hashmap.get_address_by_id(20))
+print(hashmap.get_city_by_id(20))
+print(hashmap.get_state_by_id(20))
+print(hashmap.get_zip_code_by_id(20))
+print(hashmap.get_deadline_by_id(20))
+print(hashmap.get_kilograms_by_id(20))
+print(hashmap.get_notes_by_id(20))
+
 
 def get_hash_list(key_id):
     print(key_id)
@@ -89,3 +96,33 @@ def get_hash_list(key_id):
 # print(truck_two)
 # print(truck_three)
 
+def deliverPackages(truck):
+    print(truck)
+
+    shortest_distance = 1000000
+
+    hub_address = addresses_csv[0][2]
+    print(hub_address)
+
+    for package_id in truck:
+
+        if package_id == 40:
+            package_id = 0
+
+        # This is printing off the correct packages, with the correct data, and the distance between the two
+        package = hashmap.get_all_values_by_id(package_id)
+        print(package)
+        package_address = hashmap.get_address_by_id(package_id)
+        print(adjacency_graph.edge_weights[(hub_address, package_address)])
+        if float(adjacency_graph.edge_weights[(hub_address, package_address)]) < shortest_distance:
+            shortest_distance = float(adjacency_graph.edge_weights[(hub_address, package_address)])
+            shortest_package = package
+    
+    print("shortest distance", shortest_distance)
+    print("shortest package", shortest_package)
+        
+
+
+
+
+deliverPackages(truck_one)

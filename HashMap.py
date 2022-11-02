@@ -14,17 +14,26 @@ class HashMap:
     def get_hash(self,key):
         return key % self.size
 
-    def get_value_by_id(self,id):
-        return self.map[id]
+    def get_all_values_by_id(self,id):
+        return self.map[id].print_all_values()
+    
+    def get_address_by_id(self,id):
+        return self.map[id].get_address()
 
-# hash = HashMap()
-# hash.add(25,25)
-# hash.add(35,35)
-# hash.add(45,45)
-
-# #print(hash.map)
-
-# hash.get_value_by_id(35)
-
-
-
+    def get_city_by_id(self,id):
+        return self.map[id].get_city()
+    
+    def get_state_by_id(self,id):
+        return self.map[id].get_state()
+    
+    def get_zip_code_by_id(self,id):
+        return self.map[id].get_zip_code()
+   
+    def get_deadline_by_id(self,id):
+        return self.map[id].get_deadline()
+    
+    def get_kilograms_by_id(self,id):
+        return self.map[id].get_kilograms()
+    
+    def get_notes_by_id(self,id):
+        return self.map[id].get_notes()
