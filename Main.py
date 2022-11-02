@@ -14,13 +14,54 @@
 from HashMap import *
 from Package import *
 from Truck import *
+from Adjacency import Vertex, Graph
 import csv
 
 with open('packages.csv', 'r') as read_obj:
     csv_reader = csv.reader(read_obj)
-    list_of_csv = list(csv_reader)
+    packages_csv = list(csv_reader)
 
-hashmap = HashMap(len(list_of_csv))
+with open('addresses.csv', 'r') as read_obj:
+    csv_reader = csv.reader(read_obj)
+    addresses_csv = list(csv_reader)    
+
+with open('distances.csv', 'r') as read_obj:
+    csv_reader = csv.reader(read_obj)
+    distances_csv = list(csv_reader) 
+
+# print(packages_csv)
+# print("**********************")
+# print(addresses_csv)
+# print("**********************")
+# print(distances_csv)
+
+adjacency_graph = Graph()
+
+
+for idx, address in enumerate(addresses_csv):
+    for index, matched_address in enumerate(addresses_csv):
+        if idx != index:
+            if distances_csv[idx][index]: 
+                x_vertex = Vertex(address[1])
+                y_vertex = Vertex(matched_address[1])
+                print(x_vertex.__str__())
+                print(y_vertex.__str__())
+                print("***")
+                adjacency_graph.add_vertex(x_vertex)
+                adjacency_graph.add_vertex(y_vertex)
+                adjacency_graph.add_directed_edge(x_vertex, y_vertex, distances_csv[idx][index])
+                # print(adjacency_graph.edge_weights.__str__())
+                
+                # print(matched_address)
+                # print(distances_csv[idx][index])
+            # print(idx,index)
+            # print(address)
+            # print(matched_address)
+            # print("*****")
+
+print(adjacency_graph.edge_weights[("Wheeler Historic Farm", "City Center of Rock Springs")])
+
+hashmap = HashMap(len(packages_csv))
 #print(hashmap.map)
 
 hashmap.add(7,33)
@@ -37,9 +78,9 @@ def populate_package_data(csv_list):
         hashmap.add(int(each[0]), new_package)
         #new_package.print_all_values()
 
-populate_package_data(list_of_csv)
+populate_package_data(packages_csv)
 
-print(hashmap.get_value_by_id(20))
+# print(hashmap.get_value_by_id(20))
 
 def get_hash_list(key_id):
     print(key_id)
