@@ -78,15 +78,15 @@ populate_package_data(packages_csv)
 
 # These are all of the available hashmap methods that call the package methods to display values
 # Get all values in a formatted string
-print(hashmap.get_all_values_by_id(20))
+# print(hashmap.get_all_values_by_id(20))
 # Get the address value for a package, this is what will be used in the tuples for the edge weights
-print(hashmap.get_address_by_id(20))
-print(hashmap.get_city_by_id(20))
-print(hashmap.get_state_by_id(20))
-print(hashmap.get_zip_code_by_id(20))
-print(hashmap.get_deadline_by_id(20))
-print(hashmap.get_kilograms_by_id(20))
-print(hashmap.get_notes_by_id(20))
+# print(hashmap.get_address_by_id(20))
+# print(hashmap.get_city_by_id(20))
+# print(hashmap.get_state_by_id(20))
+# print(hashmap.get_zip_code_by_id(20))
+# print(hashmap.get_deadline_by_id(20))
+# print(hashmap.get_kilograms_by_id(20))
+# print(hashmap.get_notes_by_id(20))
 
 
 def get_hash_list(key_id):
@@ -97,34 +97,45 @@ def get_hash_list(key_id):
 # print(truck_three)
 
 def deliverPackages(truck):
-    print(truck)
+    print("truck", truck)
 
     shortest_distance = 1000000
 
     hub_address = addresses_csv[0][2]
     print(hub_address)
 
-    for package_id in truck:
+    for idx,package_id in enumerate(truck):
 
         if package_id == 40:
             package_id = 0
-
+###############
+# PICK UP HERE
+# Right now, we're only going through the first time to pick the shortest distance
+# The problem is, we keep deleting idx 2 if we set up a while loop. We need to set up
+# the shortest distance = 9999 somewhere outside of the for loop we're in now, so 
+# maybe before the for inside the while. Also need to clear the package_address each time a 
+# new loop is entered into as well. 
+###############
         # This is printing off the correct packages, with the correct data, and the distance between the two
         package = hashmap.get_all_values_by_id(package_id)
-        # print(package)
+        print(package)
         package_address = hashmap.get_address_by_id(package_id)
         # print(adjacency_graph.edge_weights[(hub_address, package_address)])
         if float(adjacency_graph.edge_weights[(hub_address, package_address)]) < shortest_distance:
             shortest_distance = float(adjacency_graph.edge_weights[(hub_address, package_address)])
             shortest_package = package
-    
+            # print('index', idx)
+            shortest_package_index = idx
+
     print("shortest distance", shortest_distance)
     print("shortest package", shortest_package)
+    truck.pop(shortest_package_index)
+    print(f"truck after the the {idx} index iteration", truck)
         
 
 
 
 
 deliverPackages(truck_one)
-deliverPackages(truck_two)
-deliverPackages(truck_three)
+# deliverPackages(truck_two)
+# deliverPackages(truck_three)
