@@ -111,9 +111,9 @@ def deliverPackages(truck):
 
         # This is printing off the correct packages, with the correct data, and the distance between the two
         package = hashmap.get_all_values_by_id(package_id)
-        print(package)
+        # print(package)
         package_address = hashmap.get_address_by_id(package_id)
-        print(adjacency_graph.edge_weights[(hub_address, package_address)])
+        # print(adjacency_graph.edge_weights[(hub_address, package_address)])
         if float(adjacency_graph.edge_weights[(hub_address, package_address)]) < shortest_distance:
             shortest_distance = float(adjacency_graph.edge_weights[(hub_address, package_address)])
             shortest_package = package
@@ -126,3 +126,5 @@ def deliverPackages(truck):
 
 
 deliverPackages(truck_one)
+deliverPackages(truck_two)
+deliverPackages(truck_three)
