@@ -15,3 +15,6 @@ else:
 truck_one = Truck([1,13,14,15,16,19,20,29,30,31,34,37,40], nine)
 
 print(truck_one.__str__())
+
+print(truck_one.packages)
+print(truck_one.time)

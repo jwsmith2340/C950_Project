@@ -98,19 +98,22 @@ def get_hash_list(key_id):
 # print(truck_three)
 
 def deliverPackages(truck):
-    print("truck", truck)
+    print("truck", truck.__str__())
+
+    truck_time = truck.time
+    # print(truck_time)
 
     
 
     shortest_distance = 1000000
-    starting_len = len(truck)
-    print(starting_len)
+    starting_len = len(truck.packages)
+    # print(starting_len)
     hub_address = addresses_csv[0][2]
-    print(hub_address)
+    # print(hub_address)
     total_distance = 0
-    while len(truck) > 0:
-        print(truck)
-        for idx,package_id in enumerate(truck):
+    while len(truck.packages) > 0:
+        # print(truck.packages)
+        for idx,package_id in enumerate(truck.packages):
             # print(package_id)
 
             # Solving a hashing issue, where 40 is hashed to index 0
@@ -131,7 +134,6 @@ def deliverPackages(truck):
             package_address = hashmap.get_address_by_id(package_id)
             # print(adjacency_graph.edge_weights[(hub_address, package_address)])
             if hub_address == package_address:
-                print('yup')
                 shortest_distance = 0
                 shortest_package = package
                 shortest_package_index = idx
@@ -148,28 +150,73 @@ def deliverPackages(truck):
         # 3) I need to update my current location to be a new variable value, not hub_address
         # 4) I need to create a similar flow in my initial else clause, where I iterate through
         #       everything, popping and appending correctly
-        # print("shortest_idx", shortest_package_index)
-        print("shortest distance", shortest_distance)
+        print("##############")
+        print("shortest_idx", shortest_package_index)
+        # print("shortest distance", shortest_distance)
         total_distance += shortest_distance
         print("shortest package", shortest_package)
         print("temp package address, will become next hub address here", temp_package_address)
         hub_address = temp_package_address
         print("shortest package index:", shortest_package_index)
-        truck.pop(shortest_package_index)
-        shortest_distance = 1000
+
+        minutes = (shortest_distance / (18 * (1 / 60)))
+        print("minutes:", minutes)
+        truck.time += datetime.timedelta(minutes = (shortest_distance / (18 * (1 / 60))))
+        print(truck.time)
+
+        print("$$$$$$$$$$")
+        print(shortest_package)
+        if int(shortest_package[0]) == 40:
+            hashmap.update_delivery_status_by_id(0)
+            hashmap.update_time_delivered_by_id(0,truck.time)
+            print(hashmap.get_delivery_status_by_id(0))
+            print(hashmap.get_time_delivered_by_id(0))
+        else:
+            hashmap.update_delivery_status_by_id(int(shortest_package[0]))
+            hashmap.update_time_delivered_by_id(int(shortest_package[0]),truck.time)
+            print(hashmap.get_delivery_status_by_id(int(shortest_package[0])))
+            print(hashmap.get_time_delivered_by_id(int(shortest_package[0])))
+        print("$$$$$$$$$$")
+        
+        truck.packages.pop(shortest_package_index)
+
         print("**********")
+
         # print(f"truck after the the {idx} index iteration", truck)
+        shortest_distance = 1000
     
     print("total distance for this truck: ", total_distance)
+    print("final truck time", truck.time)
         
 
 
 
 
-# deliverPackages(truck_one) # 30.1 Miles
-deliverPackages(truck_two) # 40.6 Miles 
+deliverPackages(truck_one) # 30.1 Miles
+# deliverPackages(truck_two) # 40.6 Miles 
 # deliverPackages(truck_three) # 24.2 Miles
 
+print("check it out")
+print(truck_one.packages)
+for each in [1,13,14,15,16,19,20,29,30,31,34,37,0]:
+    print(hashmap.get_time_delivered_by_id(each))
 
-for each in range(0,40):
-    print(hashmap.get_all_values_by_id(each))
+def command_line_interface():
+    print('cli')
+    
+    user_package = int(input("Input package number (1 through 40) you want to check on  "))
+    user_time = input("Input the time you want to check in HH:MM:SS format between 08:00:00 and 20:00:00  ")
+    user_time_hours = int(user_time.split(":")[0])
+    print(user_time_hours)
+    user_time_minutes = int(user_time.split(":")[1])
+    print(user_time_minutes)
+    user_time_seconds = int(user_time.split(":")[2])
+    print(user_time_seconds)
+
+    user_time_delta = datetime.timedelta(hours = user_time_hours, minutes = user_time_minutes, seconds = user_time_seconds)
+
+    print(user_time_delta)
+
+    
+
+command_line_interface()

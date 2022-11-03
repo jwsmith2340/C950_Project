@@ -40,3 +40,13 @@ class HashMap:
 
     def get_delivery_status_by_id(self,id):
         return self.map[id].get_delivery_status()
+    
+    def get_time_delivered_by_id(self,id):
+        return self.map[id].get_time_delivered()
+
+    def update_delivery_status_by_id(self,id):
+        self.map[id].update_delivery_status("Delivered")
+        return "Updated"
+    
+    def update_time_delivered_by_id(self,id,time):
+        self.map[id].update_time_delivered(time)

@@ -22,6 +22,9 @@ class Package:
     def update_delivery_status(self,delivery_status):
         self.delivery_status = delivery_status
 
+    def update_time_delivered(self,time_delivered):
+        self.time_delivered = time_delivered
+
     def update_address(self, address):
         self.address = address
 
@@ -60,6 +63,9 @@ class Package:
     
     def get_delivery_status(self):
         return self.delivery_status
+    
+    def get_time_delivered(self):
+        return self.time_delivered
     
     # def __str__(self):
     #     return f"Key:{self.id}, Address:{self.address}, City:{self.city}, State:{self.state}, Zip:{self.zip_code}, Deadline:{self.deadline}, Weight:{self.kilograms}, Notes:{self.notes}"
