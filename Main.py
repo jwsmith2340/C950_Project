@@ -217,6 +217,9 @@ def command_line_interface():
 
     print(user_time_delta)
 
-    
+    # Pick up here,
+    # 1) Finish the logic in the CLI to retrieve a packages delivery status
+    # 2) Don't forget to update for 'package address change' and shit like that
+    # 3) Clean up the mess you've made with all these print statements
 
 command_line_interface()
