@@ -1,5 +1,8 @@
+import re
+
+
 class Package:
-    def __init__(self,id,address,city,state,zip_code,deadline,kilograms,notes):
+    def __init__(self,id,address,city,state,zip_code,deadline,kilograms,notes,time_delivered = None,delivery_status = "At hub"):
         self.id = id
         self.address = address
         self.city = city
@@ -8,6 +11,13 @@ class Package:
         self.deadline = deadline
         self.kilograms = kilograms
         self.notes = notes
+        self.time_delivered = time_delivered
+        self.delivery_status = delivery_status
+
+        if self.notes:
+            if 'Delayed' in self.notes:
+                self.delivery_status = "Delayed"
+        
     
     def update_delivery_status(self,delivery_status):
         self.delivery_status = delivery_status
@@ -22,7 +32,7 @@ class Package:
         self.zip = zip
 
     def print_all_values(self):
-        return self.id, self.address, self.city, self.state, self.zip_code, self.deadline, self.kilograms, self.notes
+        return self.id, self.address, self.city, self.state, self.zip_code, self.deadline, self.kilograms, self.notes, self.time_delivered, self.delivery_status
 
     def get_id(self):
         return self.id
@@ -47,6 +57,9 @@ class Package:
 
     def get_notes(self):
         return self.notes
+    
+    def get_delivery_status(self):
+        return self.delivery_status
     
     # def __str__(self):
     #     return f"Key:{self.id}, Address:{self.address}, City:{self.city}, State:{self.state}, Zip:{self.zip_code}, Deadline:{self.deadline}, Weight:{self.kilograms}, Notes:{self.notes}"

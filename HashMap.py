@@ -37,3 +37,6 @@ class HashMap:
     
     def get_notes_by_id(self,id):
         return self.map[id].get_notes()
+
+    def get_delivery_status_by_id(self,id):
+        return self.map[id].get_delivery_status()

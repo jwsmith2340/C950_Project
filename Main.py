@@ -11,6 +11,7 @@
 # Drivers leave the hub at 8am or later
 # Distances in the distance table are equal regardless of distance traveled(?)
 # The day ends when all the packages are delivered
+from functools import total_ordering
 from json.encoder import INFINITY
 from HashMap import *
 from Package import *
@@ -99,43 +100,76 @@ def get_hash_list(key_id):
 def deliverPackages(truck):
     print("truck", truck)
 
-    shortest_distance = 1000000
+    
 
+    shortest_distance = 1000000
+    starting_len = len(truck)
+    print(starting_len)
     hub_address = addresses_csv[0][2]
     print(hub_address)
+    total_distance = 0
+    while len(truck) > 0:
+        print(truck)
+        for idx,package_id in enumerate(truck):
+            # print(package_id)
 
-    for idx,package_id in enumerate(truck):
+            # Solving a hashing issue, where 40 is hashed to index 0
+            if package_id == 40:
+                package_id = 0
 
-        if package_id == 40:
-            package_id = 0
-###############
-# PICK UP HERE
-# Right now, we're only going through the first time to pick the shortest distance
-# The problem is, we keep deleting idx 2 if we set up a while loop. We need to set up
-# the shortest distance = 9999 somewhere outside of the for loop we're in now, so 
-# maybe before the for inside the while. Also need to clear the package_address each time a 
-# new loop is entered into as well. 
-###############
-        # This is printing off the correct packages, with the correct data, and the distance between the two
-        package = hashmap.get_all_values_by_id(package_id)
-        print(package)
-        package_address = hashmap.get_address_by_id(package_id)
-        # print(adjacency_graph.edge_weights[(hub_address, package_address)])
-        if float(adjacency_graph.edge_weights[(hub_address, package_address)]) < shortest_distance:
-            shortest_distance = float(adjacency_graph.edge_weights[(hub_address, package_address)])
-            shortest_package = package
-            # print('index', idx)
-            shortest_package_index = idx
-
-    print("shortest distance", shortest_distance)
-    print("shortest package", shortest_package)
-    truck.pop(shortest_package_index)
-    print(f"truck after the the {idx} index iteration", truck)
+            ###############
+            # PICK UP HERE
+            # Right now, we're only going through the first time to pick the shortest distance
+            # The problem is, we keep deleting idx 2 if we set up a while loop. We need to set up
+            # the shortest distance = 9999 somewhere outside of the for loop we're in now, so 
+            # maybe before the for inside the while. Also need to clear the package_address each time a 
+            # new loop is entered into as well. 
+            ###############
+            # This is printing off the correct packages, with the correct data, and the distance between the two
+            package = hashmap.get_all_values_by_id(package_id)
+            # print(package)
+            package_address = hashmap.get_address_by_id(package_id)
+            # print(adjacency_graph.edge_weights[(hub_address, package_address)])
+            if hub_address == package_address:
+                print('yup')
+                shortest_distance = 0
+                shortest_package = package
+                shortest_package_index = idx
+            elif float(adjacency_graph.edge_weights[(hub_address, package_address)]) < shortest_distance:
+                shortest_distance = float(adjacency_graph.edge_weights[(hub_address, package_address)])
+                shortest_package = package
+                # print('index', idx)
+                shortest_package_index = idx
+                temp_package_address = package_address
+            
+        # What do I need? 
+        # 1) I need to push the shortest package id into an new array
+        # 2) I need to remove that package id from the original truck array
+        # 3) I need to update my current location to be a new variable value, not hub_address
+        # 4) I need to create a similar flow in my initial else clause, where I iterate through
+        #       everything, popping and appending correctly
+        # print("shortest_idx", shortest_package_index)
+        print("shortest distance", shortest_distance)
+        total_distance += shortest_distance
+        print("shortest package", shortest_package)
+        print("temp package address, will become next hub address here", temp_package_address)
+        hub_address = temp_package_address
+        print("shortest package index:", shortest_package_index)
+        truck.pop(shortest_package_index)
+        shortest_distance = 1000
+        print("**********")
+        # print(f"truck after the the {idx} index iteration", truck)
+    
+    print("total distance for this truck: ", total_distance)
         
 
 
 
 
-deliverPackages(truck_one)
-# deliverPackages(truck_two)
-# deliverPackages(truck_three)
+# deliverPackages(truck_one) # 30.1 Miles
+deliverPackages(truck_two) # 40.6 Miles 
+# deliverPackages(truck_three) # 24.2 Miles
+
+
+for each in range(0,40):
+    print(hashmap.get_all_values_by_id(each))
