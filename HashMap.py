@@ -1,4 +1,3 @@
-# Going to insert into cells based on 1's place via Mod %
 from Package import *
 
 class HashMap:
@@ -40,13 +39,39 @@ class HashMap:
 
     def get_delivery_status_by_id(self,id):
         return self.map[id].get_delivery_status()
+
+    def get_truck_number_by_id(self,id):
+        return self.map[id].get_truck_number()
     
+    def get_time_at_hub_by_id(self,id):
+        return self.map[id].get_time_at_hub()
+
+    def get_time_en_route_by_id(self,id):
+        return self.map[id].get_time_en_route()
+        
     def get_time_delivered_by_id(self,id):
         return self.map[id].get_time_delivered()
 
-    def update_delivery_status_by_id(self,id):
-        self.map[id].update_delivery_status("Delivered")
-        return "Updated"
+    def update_delivery_status_by_id(self,id,status):
+        self.map[id].update_delivery_status(status)
     
+    def update_truck_number_by_id(self,id,number):
+        self.map[id].update_truck_number(number)  
+    
+    def update_time_at_hub_by_id(self,id,time):
+        self.map[id].update_time_at_hub(time)
+
+    def update_time_en_route_by_id(self,id,time):
+        self.map[id].update_time_en_route(time)
+
     def update_time_delivered_by_id(self,id,time):
         self.map[id].update_time_delivered(time)
+    
+    def update_address_by_id(self,id,address):
+        self.map[id].update_address(address)
+
+    def update_city_by_id(self,id,city):
+        self.map[id].update_city(city)
+
+    def update_zip_by_id(self,id,zip):
+        self.map[id].update_zip(zip)

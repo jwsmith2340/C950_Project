@@ -5,7 +5,7 @@ class Vertex:
     def __str__(self):
         return self.label
 
-class Graph:
+class Matrix:
     def __init__(self):
         self.adjacency_list = {}
         self.edge_weights = {} 
@@ -20,20 +20,3 @@ class Graph:
     def add_undirected_edge(self, from_vertex, to_vertex, weight = 1.0):
         self.add_directed_edge(from_vertex, to_vertex, weight)
         self.add_directed_edge(to_vertex, from_vertex, weight)
-
-
-    
-
-
-
-
-# g = Graph()
-# vertex_a = Vertex("New York")
-# vertex_b = Vertex("Tokyo")
-# vertex_c = Vertex("London")
-
-# g.add_vertex(vertex_a)
-# g.add_vertex(vertex_b)
-# g.add_vertex(vertex_c)
-
-# print(g.adjacency_list[vertex_a])
