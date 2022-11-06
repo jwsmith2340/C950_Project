@@ -183,6 +183,8 @@ def command_line_interface():
                     time_en_route = hashmap.get_time_en_route_by_id(package_id)
                     time_delivered = hashmap.get_time_delivered_by_id(package_id)
                     truck_number = hashmap.get_truck_number_by_id(package_id)
+                    package_deadline = hashmap.get_deadline_by_id(package_id)
+
 
                     if package_id == 0:
                         package_id = 40   
@@ -191,14 +193,15 @@ def command_line_interface():
                     # to see when the package arrived at the hub. If it never did, it means the package was delayed. Depending
                     # on the logic route, the appropriate message is delivered to the user regarding the status of their specified
                     # package at the specified time. 
+                    print("**********")
                     if time_delivered != None and time_delivered <= user_time_delta:
-                        print(f"Package {package_id}    Status at {user_time_delta}: Delivered by Truck {truck_number}")
+                        print(f"Package {package_id}\nDeadline: {package_deadline}\nStatus at {user_time_delta}: Delivered by Truck {truck_number}")
                     elif time_en_route != None and time_en_route <= user_time_delta:
-                        print(f"Package {package_id}    Status at {user_time_delta}: En Route on Truck {truck_number}")
+                        print(f"Package {package_id}\nDeadline: {package_deadline}\nStatus at {user_time_delta}: En Route on Truck {truck_number}")
                     elif time_at_hub != None and time_at_hub <= user_time_delta:
-                        print(f"Package {package_id}    Status at {user_time_delta}: At the Hub")
+                        print(f"Package {package_id}\nDeadline: {package_deadline}\nStatus at {user_time_delta}: At the Hub")
                     else:
-                        print(f"Package {package_id}    Status at {user_time_delta}: Delayed")
+                        print(f"Package {package_id}\nDeadline: {package_deadline}\nStatus at {user_time_delta}: Delayed")
 
             print("\nScheduled miles and delivery times for each truck:")
             print(f"Truck {truck_one.truck_number} traveled {truck_one.total_distance} total miles and delivered its final package at {truck_one.time}.")
